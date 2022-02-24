@@ -1,7 +1,7 @@
 import abc
 
 from .aes import aes
-from .stats import StatCount, StatIdentity, StatBin, StatNone, StatFunction
+from .stats import StatCount, StatIdentity, StatBin, StatNone, StatFunction, StatQQ
 from .utils import bar_position_plotly_to_gg, linetype_plotly_to_gg
 
 
@@ -661,3 +661,28 @@ def geom_ribbon(mapping=aes(), fill=None, color=None):
         The geom to be applied.
     """
     return GeomRibbon(mapping, fill=fill, color=color)
+
+
+class GeomQQ(Geom):
+    def __init__(self, aes):
+        super().__init__(aes)
+
+    def apply_to_fig(self, parent, agg_result, fig_so_far, precomputed):
+        def plot(df):
+            scatter_args = {
+                "x": df.x,
+                "y": df.y,
+                "mode": 'markers'
+            }
+
+            fig_so_far.add_scatter(**scatter_args)
+
+        for agg_df in agg_result:
+            plot(agg_df)
+
+    def get_stat(self):
+        return StatQQ()
+
+
+def geom_qq(mapping=aes()):
+    return GeomQQ(mapping)

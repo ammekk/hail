@@ -164,8 +164,10 @@ class GGPlot:
             return labels_to_stats, selected.aggregate(hl.struct(**aggregators))
 
         def sort_table_add_idx(selected):
-            selected = selected.key_by('sample').persist()
+            selected = selected.order_by(selected.figure_mapping['sample']).persist()
             selected = selected.add_index()
+            selected = selected.annotate(figure_mapping=hl.struct(idx=selected.idx, **selected.figure_mapping))
+            selected = selected.drop("idx")
             return selected
 
 
@@ -175,7 +177,6 @@ class GGPlot:
             selected = sort_table_add_idx(selected)
 
         mapping_per_geom, precomputed = collect_mappings_and_precomputed(selected)
-        import pdb;pdb.set_trace()
         labels_to_stats, aggregated = get_aggregation_result(selected, mapping_per_geom, precomputed)
 
         fig = go.Figure()
