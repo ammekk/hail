@@ -130,3 +130,14 @@ class StatBin(Stat):
             df.attrs.update(**grouped_struct)
             result.append(df)
         return result
+
+
+class StatQQ(Stat):
+    def get_precomputes(self, mapping):
+        return hl.struct(count=hl.agg.count())
+
+    def make_agg(self, mapping, precomputed):
+        count = precomputed
+        return hl.agg.collect(hl.struct(x=hl.log10(mapping['sample']), y=hl.log10((selected.idx + 1 )/ count)))
+
+
