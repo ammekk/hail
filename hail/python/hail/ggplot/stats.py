@@ -142,17 +142,17 @@ class StatQQ(Stat):
 
     def listify(self, agg_result):
         result = []
-        import pdb; pdb.set_trace()
-        for collected in agg_result:
-            columns = list(collected[0].keys())
-            data_dict = {}
+        data_dict = {column: [] for column in agg_result[0].keys()}
+        for qq_point in agg_result:
+            for key, value in qq_point.items():
+                data_dict[key].append(value)
 
-            for column in columns:
-                col_data = [row[column] for row in collected]
-                data_dict[column] = pd.Series(col_data)
-            df = pd.DataFrame(data_dict)
-            df.attrs.update(**grouped_struct)
-            result.append(df)
+        series_dict = {key: pd.Series(value) for key, value in data_dict.items()}
+        result.append(pd.DataFrame(series_dict))
+        return result
+
+
+
 
         return result
 
