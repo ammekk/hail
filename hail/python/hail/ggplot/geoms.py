@@ -685,6 +685,14 @@ class GeomQQ(Geom):
 
 
 def geom_qq():
+    """Creates qq plot scatter based on sample, an aesthetic defined in the parent
+
+    Currently no aesthetics supported
+
+    :return:
+    :class:`FigureAttribute`
+        The geom to be applied.
+    """
     return GeomQQ(aes())
 
 
@@ -711,5 +719,13 @@ class GeomQQLine(Geom):
 
 
 def geom_qq_line():
+    """Creates line for qq plot based on sample, an aesthetic defined in the parent
+
+    Currently no aesthetics supported
+
+    :return:
+    :class:`FigureAttribute`
+        The geom to be applied.
+    """
     return GeomQQLine(aes())
 
