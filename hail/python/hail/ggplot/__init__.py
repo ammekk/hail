@@ -2,7 +2,7 @@ from .coord_cartesian import coord_cartesian
 from .ggplot import ggplot, GGPlot # noqa F401
 from .aes import aes, Aesthetic # noqa F401
 from .geoms import FigureAttribute, geom_line, geom_point, geom_text, geom_bar, geom_histogram, geom_func, \
-    geom_hline, geom_vline, geom_tile, geom_col, geom_area, geom_ribbon, geom_qq # noqa F401
+    geom_hline, geom_vline, geom_tile, geom_col, geom_area, geom_ribbon, geom_qq, geom_qq_line # noqa F401
 from .labels import ggtitle, xlab, ylab
 from .scale import scale_x_continuous, scale_y_continuous, scale_x_discrete, scale_y_discrete, scale_x_genomic, \
     scale_x_log10, scale_y_log10, scale_x_reverse, scale_y_reverse, scale_color_discrete, scale_color_identity,\
@@ -24,6 +24,7 @@ __all__ = [
     "geom_area",
     "geom_ribbon",
     "geom_qq",
+    "geom_qq_line",
     "ggtitle",
     "xlab",
     "ylab",

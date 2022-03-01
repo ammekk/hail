@@ -684,5 +684,32 @@ class GeomQQ(Geom):
         return StatQQ()
 
 
-def geom_qq(mapping=aes()):
-    return GeomQQ(mapping)
+def geom_qq():
+    return GeomQQ(aes())
+
+
+class GeomQQLine(Geom):
+    def __init__(self, aes):
+        super().__init__(aes)
+
+    def apply_to_fig(self, parent, agg_result, fig_so_far, precomputed):
+        def plot(df):
+            max_val = max(df.x.max(), df.y.max())
+            scatter_args = {
+                "x": [0, max_val],
+                "y": [0, max_val],
+                "mode": "lines"
+            }
+            fig_so_far.add_scatter(**scatter_args)
+
+
+        for agg_df in agg_result:
+            plot(agg_df)
+
+    def get_stat(self):
+        return StatQQ()
+
+
+def geom_qq_line():
+    return GeomQQLine(aes())
+
